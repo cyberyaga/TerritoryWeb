@@ -11,7 +11,6 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap4")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-TerritoryWeb-69EF6056-8DC5-4498-8525-267418D941ED")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("TerritoryWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
