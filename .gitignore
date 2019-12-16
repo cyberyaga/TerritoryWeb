@@ -1,2 +1,5 @@
 bin
 obj
+/*.Release.json
+app.db-shm
+app.db-wal
