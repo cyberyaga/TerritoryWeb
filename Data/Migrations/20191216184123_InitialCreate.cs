@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TerritoryWeb.Data.Migrations
 {
-    public partial class TerritoryWebData : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -64,7 +64,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -77,7 +77,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -90,7 +90,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     shortURL = table.Column<string>(nullable: true),
                     longURL = table.Column<string>(nullable: true),
                     dateCreated = table.Column<DateTime>(nullable: false),
@@ -106,7 +106,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -127,7 +127,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -212,7 +212,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true),
                     CongregationID = table.Column<int>(nullable: false)
                 },
@@ -232,7 +232,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(nullable: true),
                     CongregationID = table.Column<int>(nullable: true)
                 },
@@ -252,7 +252,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TerritoryName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
@@ -290,7 +290,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TerritoryID = table.Column<int>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
@@ -337,7 +337,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TerritoryId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     IsRead = table.Column<bool>(nullable: false),
@@ -360,7 +360,7 @@ namespace TerritoryWeb.Data.Migrations
                 columns: table => new
                 {
                     BoundaryID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TerritoryID = table.Column<int>(nullable: false),
                     GeoLat = table.Column<decimal>(nullable: false),
                     GeoLong = table.Column<decimal>(nullable: false)
@@ -385,7 +385,8 @@ namespace TerritoryWeb.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -411,7 +412,8 @@ namespace TerritoryWeb.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DoorCodes_CongregationID",
