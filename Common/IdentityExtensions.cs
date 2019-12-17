@@ -14,7 +14,7 @@ namespace TerritoryWeb.Common
     {
         public static int GetCongregationID(IPrincipal CurUser)
         {
-            int CongID = 0;
+            int CongID = 1;
             /*
             if (CurUser.Identity.IsAuthenticated)
             {

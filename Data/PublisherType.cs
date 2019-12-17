@@ -7,12 +7,12 @@ namespace TerritoryWeb.Data
     {
         public PublisherType()
         {
-            //this.AspNetUsers = new HashSet<AspNetUser>();
+            this.ApplicationUsers = new HashSet<ApplicationUser>();
         }
     
         public int Id { get; set; }
         public string Description { get; set; }
     
-        //public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

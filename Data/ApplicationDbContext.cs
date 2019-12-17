@@ -8,10 +8,7 @@ namespace TerritoryWeb.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){}
         
         //Database Tables
         public DbSet<Congregation> Congregations { get; set; }

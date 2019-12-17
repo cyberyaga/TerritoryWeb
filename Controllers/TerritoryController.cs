@@ -30,98 +30,9 @@ namespace TerritoryWeb.Controllers
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
 
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.TerritoryNameSortParam = String.IsNullOrEmpty(sortOrder) ? "TerritoryName_desc" : "";
-            ViewBag.DoorsSortParm = sortOrder == "Doors" ? "Doors_desc" : "Doors";
-            ViewBag.CitySortParm = sortOrder == "City" ? "City_desc" : "City";
-            ViewBag.TypeSortParm = sortOrder == "Type" ? "Type_desc" : "Type";
-            ViewBag.AssignedPublisherIDSortParm = sortOrder == "AssignedPublisherID" ? "AssignedPublisherID_desc" : "AssignedPublisherID";
-            ViewBag.CheckedOutSortParm = sortOrder == "CheckedOut" ? "CheckedOut_desc" : "CheckedOut";
-            ViewBag.CheckedInSortParm = sortOrder == "CheckedIn" ? "CheckedIn_desc" : "CheckedIn";
-
             List<Territory> ts = new List<Territory>();
-            
-            //Sorting
-            switch (sortOrder)
-            {
-                case "TerritoryName_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.TerritoryName).ToList();
-                        break;
-                    }
-                case "Doors":
-                    {
-                        ts = (from t in db.Territories
-                              where t.CongregationID == CongID
-                              orderby t.Doors.Count ascending
-                              select t).ToList();
-                        break;
-                    }
-                case "Doors_desc":
-                    {
-                        ts = (from t in db.Territories
-                              where t.CongregationID == CongID
-                              orderby t.Doors.Count descending
-                              select t).ToList();
-                        break;
-                    }
-                case "City":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.City).ToList();
-                        break;
-                    }
-                case "City_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.City).ToList();
-                        break;
-                    }
-                case "Type":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.Type).ToList();
-                        break;
-                    }
-                case "Type_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.Type).ToList();
-                        break;
-                    }
-                case "AssignedPublisherID":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.AssignedPublisherID).ToList();
-                        break;
-                    }
-                case "AssignedPublisherID_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.AssignedPublisherID).ToList();
-                        break;
-                    }
-                case "CheckedOut":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.CheckedOut).ToList();
-                        break;
-                    }
-                case "CheckedOut_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.CheckedOut).ToList();
-                        break;
-                    }
-                case "CheckedIn":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.CheckedIn).ToList();
-                        break;
-                    }
-                case "CheckedIn_desc":
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderByDescending(s => s.CheckedIn).ToList();
-                        break;
-                    }
-                default:
-                    {
-                        ts = db.Territories.Where(x => x.CongregationID == CongID).OrderBy(s => s.TerritoryName).ToList();
-                        break;
-                    }
-            }
 
+            ts = db.Territories.Where(x => x.CongregationID == CongID).ToList();
 
             //Limit territories
             string[] ViewAllGroups = { "TerritoryEditor", "Manager", "Admin" };
@@ -135,15 +46,14 @@ namespace TerritoryWeb.Controllers
                     break;
                 }
             }
-
+/*
             if (LimitUser) //Limit what the user can see to assigned Territories
             {
                 string UserId = "";//User.Identity.GetUserId();
 
                 List<int> addTerr = db.TerritoryAccesses.Where(x => x.UserId == UserId).Select(s => s.TerritoryId).ToList();
-                ts = ts.Where(x => x.AssignedPublisherID == UserId || addTerr.Contains(x.Id)).ToList();
-            }
-
+                ts = ts.Where(x => x.AssignedPublisherId == UserId || addTerr.Contains(x.Id)).ToList();
+            }*/
             return View(ts);
         }
 
@@ -185,7 +95,7 @@ namespace TerritoryWeb.Controllers
             Territory territory = db.Territories.Find(id);
             if (territory == null //Not Found
                 || (territory != null && territory.CongregationID != CongID) //Not part of the congregation
-                || !(AllowCheckIn || addTerr.Contains(territory.Id) || territory.AssignedPublisherID == CurrentUserId))//Not allowed
+                || !(AllowCheckIn || addTerr.Contains(territory.Id) || territory.AssignedPublisherId == CurrentUserId))//Not allowed
             {
                 return NotFound();
             }
@@ -196,7 +106,7 @@ namespace TerritoryWeb.Controllers
 
 
 
-            ViewBag.AllowCheckin = (AllowCheckIn || CurrentUserId == territory.AssignedPublisherID) ? "" : "disabled=\"disabled\"";
+            ViewBag.AllowCheckin = (AllowCheckIn || CurrentUserId == territory.AssignedPublisherId) ? "" : "disabled=\"disabled\"";
             ViewBag.AllowPerm = AllowCheckIn ? "" : "disabled";
 
             return View(territory);
@@ -257,7 +167,7 @@ namespace TerritoryWeb.Controllers
 
                         if (d != null && !doors.Any(x => x.Address == d.Address && x.Street == d.Street))
                         {
-                            d.TerritoryID = territory.Id;
+                            d.TerritoryId = territory.Id;
                             d.AddedBy = User.Identity.Name;
                             d.Added = DateTime.Now;
                             d.ModifiedBy = User.Identity.Name;
@@ -293,7 +203,7 @@ namespace TerritoryWeb.Controllers
             {
                 return NotFound();
             }
-            ViewBag.TerritoryTypes = new SelectList(db.TerritoryTypes, "Id", "Description", territory.Type);
+            ViewBag.TerritoryTypes = new SelectList(db.TerritoryTypes, "Id", "Description", territory.TerritoryTypeId);
             return View(territory);
         }
 
@@ -311,7 +221,7 @@ namespace TerritoryWeb.Controllers
                 t.Id = territory.Id;
                 t.TerritoryName = territory.TerritoryName;
                 t.City = territory.City;
-                t.Type = territory.Type;
+                t.TerritoryTypeId = territory.TerritoryTypeId;
                 t.Notes = territory.Notes;
 
                 t.ModifiedBy = User.Identity.Name;
@@ -339,7 +249,7 @@ namespace TerritoryWeb.Controllers
 
                 return RedirectToAction("Details", new { id = t.Id });
             }
-            ViewBag.TerritoryTypes = new SelectList(db.TerritoryTypes, "Id", "Description", territory.Type);
+            ViewBag.TerritoryTypes = new SelectList(db.TerritoryTypes, "Id", "Description", territory.TerritoryTypeId);
             return View(territory);
         }
 
@@ -422,7 +332,7 @@ namespace TerritoryWeb.Controllers
             t.CheckedIn = null;
             t.LastCheckedInBy = null;
             t.CheckedOut = DateTime.Now;
-            t.AssignedPublisherID = PublisherID;
+            t.AssignedPublisherId = PublisherID;
             db.SaveChanges();
 
             //Send Email
@@ -453,10 +363,10 @@ namespace TerritoryWeb.Controllers
             var tmpPerm = db.TerritoryAccesses.Where(x => x.TerritoryId == TerritoryID && x.TempAccess);
             db.TerritoryAccesses.RemoveRange(tmpPerm);
 
-            t.AssignedPublisherID = null;
+            t.AssignedPublisherId = null;
             t.CheckedOut = null;
             t.CheckedIn = DateTime.Now;
-            t.LastCheckedInBy = "";//User.Identity.GetUserId();
+            t.LastCheckedInById = "";//User.Identity.GetUserId();
             db.SaveChanges();
             return Json("Ok");
         }
@@ -485,12 +395,12 @@ namespace TerritoryWeb.Controllers
 
             TerritoryCordinateIDModel tcord = new TerritoryCordinateIDModel();
             var dlist = (from d in db.Doors
-                         where d.TerritoryID == TerritoryID && d.GeoLat != null && d.GeoLong != null && d.Territory.CongregationID == CongID
+                         where d.TerritoryId == TerritoryID && d.GeoLat != null && d.GeoLong != null && d.Territory.CongregationID == CongID
                          orderby d.GeoLat ascending, d.GeoLong ascending
                          select new { d.Id, AddressFull = d.Address + " " + d.Street, d.GeoLat, d.GeoLong }).Distinct().ToList();
 
             //Get territory bounds
-            List<TerritoryBound> tBound = db.TerritoryBounds.Where(x => x.TerritoryID == TerritoryID).ToList();
+            List<TerritoryBound> tBound = db.TerritoryBounds.Where(x => x.TerritoryId == TerritoryID).ToList();
 
             //Add Doors to model
             dlist.ForEach(x => tcord.DoorCoordinates.Add(new TerritoryCordinateIDModel.DoorIDModel() { DoorID = x.Id, Address = x.AddressFull, Coordinates = new PointF((float)x.GeoLat, (float)x.GeoLong) }));

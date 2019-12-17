@@ -8,7 +8,7 @@ namespace TerritoryWeb.Data
         public Congregation()
         {
             this.Territories = new HashSet<Territory>();
-            //this.AspNetUsers = new HashSet<AspNetUser>();
+            this.ApplicationUsers = new HashSet<ApplicationUser>();
             this.Languages = new HashSet<Language>();
             this.DoorCodes = new HashSet<DoorCode>();
         }
@@ -17,7 +17,7 @@ namespace TerritoryWeb.Data
         public string Description { get; set; }
     
         public virtual ICollection<Territory> Territories { get; set; }
-        //public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
         public virtual ICollection<Language> Languages { get; set; }
         public virtual ICollection<DoorCode> DoorCodes { get; set; }
     }

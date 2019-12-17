@@ -13,8 +13,7 @@ namespace TerritoryWeb.Data
         public int Id { get; set; }
         public string Description { get; set; }
         public Nullable<int> CongregationID { get; set; }
-    
-        public virtual ICollection<Door> Doors { get; set; }
         public virtual Congregation Congregation { get; set; }
+        public virtual ICollection<Door> Doors { get; set; }
     }
 }

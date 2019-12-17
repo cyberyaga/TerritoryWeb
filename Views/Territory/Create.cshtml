@@ -46,16 +46,16 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.TerritoryTypeId, new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.TerritoryTypes)
                         {
                             <label class="radio-inline">
-                                @Html.RadioButtonFor(x => x.Type, item.Value, new { id = item.Value })
+                                @Html.RadioButtonFor(x => x.TerritoryTypeId, item.Value, new { id = item.Value })
                                 @Html.DisplayFor(model => item.Text)
                             </label>
                         }
-                        @Html.ValidationMessageFor(model => model.Type)
+                        @Html.ValidationMessageFor(model => model.TerritoryTypeId)
                     </div>
                 </div>
 

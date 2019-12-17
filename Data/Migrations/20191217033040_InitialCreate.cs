@@ -22,31 +22,6 @@ namespace TerritoryWeb.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Congregations",
                 columns: table => new
                 {
@@ -120,6 +95,86 @@ namespace TerritoryWeb.Data.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoorCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(nullable: true),
+                    CongregationID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoorCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoorCodes_Congregations_CongregationID",
+                        column: x => x.CongregationID,
+                        principalTable: "Congregations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Languages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(nullable: true),
+                    CongregationID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Languages_Congregations_CongregationID",
+                        column: x => x.CongregationID,
+                        principalTable: "Congregations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    CongregationId = table.Column<int>(nullable: true),
+                    PublisherTypeId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Congregations_CongregationId",
+                        column: x => x.CongregationId,
+                        principalTable: "Congregations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_PublisherTypes_PublisherTypeId",
+                        column: x => x.PublisherTypeId,
+                        principalTable: "PublisherTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,46 +263,6 @@ namespace TerritoryWeb.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DoorCodes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: true),
-                    CongregationID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DoorCodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DoorCodes_Congregations_CongregationID",
-                        column: x => x.CongregationID,
-                        principalTable: "Congregations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Languages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: true),
-                    CongregationID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Languages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Languages_Congregations_CongregationID",
-                        column: x => x.CongregationID,
-                        principalTable: "Congregations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Territories",
                 columns: table => new
                 {
@@ -255,22 +270,27 @@ namespace TerritoryWeb.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TerritoryName = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
-                    Type = table.Column<int>(nullable: false),
                     Notes = table.Column<string>(nullable: true),
-                    CongregationID = table.Column<int>(nullable: false),
-                    AssignedPublisherID = table.Column<string>(nullable: true),
                     AddedBy = table.Column<string>(nullable: true),
                     Added = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Modified = table.Column<DateTime>(nullable: false),
                     CheckedOut = table.Column<DateTime>(nullable: true),
                     CheckedIn = table.Column<DateTime>(nullable: true),
-                    LastCheckedInBy = table.Column<string>(nullable: true),
-                    TerritoryTypeId = table.Column<int>(nullable: true)
+                    CongregationID = table.Column<int>(nullable: false),
+                    TerritoryTypeId = table.Column<int>(nullable: false),
+                    AssignedPublisherId = table.Column<string>(nullable: true),
+                    LastCheckedInById = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Territories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Territories_AspNetUsers_AssignedPublisherId",
+                        column: x => x.AssignedPublisherId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Territories_Congregations_CongregationID",
                         column: x => x.CongregationID,
@@ -278,11 +298,17 @@ namespace TerritoryWeb.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Territories_AspNetUsers_LastCheckedInById",
+                        column: x => x.LastCheckedInById,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Territories_TerritoryTypes_TerritoryTypeId",
                         column: x => x.TerritoryTypeId,
                         principalTable: "TerritoryTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,23 +317,22 @@ namespace TerritoryWeb.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TerritoryID = table.Column<int>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     Apartment = table.Column<string>(nullable: true),
-                    LanguageID = table.Column<int>(nullable: true),
-                    CodeID = table.Column<int>(nullable: true),
                     Comments = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Telephone = table.Column<string>(nullable: true),
                     PostalCode = table.Column<string>(nullable: true),
-                    GeoLat = table.Column<decimal>(nullable: true),
-                    GeoLong = table.Column<decimal>(nullable: true),
+                    GeoLat = table.Column<decimal>(type: "decimal(9,6)", nullable: true),
+                    GeoLong = table.Column<decimal>(type: "decimal(9,6)", nullable: true),
                     AddedBy = table.Column<string>(nullable: true),
                     Added = table.Column<DateTime>(nullable: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Modified = table.Column<DateTime>(nullable: false),
-                    DoorCodeId = table.Column<int>(nullable: true)
+                    DoorCodeId = table.Column<int>(nullable: true),
+                    TerritoryId = table.Column<int>(nullable: false),
+                    LanguageId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -319,14 +344,14 @@ namespace TerritoryWeb.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Doors_Languages_LanguageID",
-                        column: x => x.LanguageID,
+                        name: "FK_Doors_Languages_LanguageId",
+                        column: x => x.LanguageId,
                         principalTable: "Languages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Doors_Territories_TerritoryID",
-                        column: x => x.TerritoryID,
+                        name: "FK_Doors_Territories_TerritoryId",
+                        column: x => x.TerritoryId,
                         principalTable: "Territories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -338,15 +363,22 @@ namespace TerritoryWeb.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TerritoryId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     IsRead = table.Column<bool>(nullable: false),
                     IsWrite = table.Column<bool>(nullable: false),
-                    TempAccess = table.Column<bool>(nullable: false)
+                    TempAccess = table.Column<bool>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    TerritoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TerritoryAccesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TerritoryAccesses_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TerritoryAccesses_Territories_TerritoryId",
                         column: x => x.TerritoryId,
@@ -359,18 +391,18 @@ namespace TerritoryWeb.Data.Migrations
                 name: "TerritoryBounds",
                 columns: table => new
                 {
-                    BoundaryID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TerritoryID = table.Column<int>(nullable: false),
-                    GeoLat = table.Column<decimal>(nullable: false),
-                    GeoLong = table.Column<decimal>(nullable: false)
+                    GeoLat = table.Column<decimal>(type: "decimal(9,6)", nullable: false),
+                    GeoLong = table.Column<decimal>(type: "decimal(9,6)", nullable: false),
+                    TerritoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TerritoryBounds", x => x.BoundaryID);
+                    table.PrimaryKey("PK_TerritoryBounds", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TerritoryBounds_Territories_TerritoryID",
-                        column: x => x.TerritoryID,
+                        name: "FK_TerritoryBounds_Territories_TerritoryId",
+                        column: x => x.TerritoryId,
                         principalTable: "Territories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -416,6 +448,16 @@ namespace TerritoryWeb.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CongregationId",
+                table: "AspNetUsers",
+                column: "CongregationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PublisherTypeId",
+                table: "AspNetUsers",
+                column: "PublisherTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DoorCodes_CongregationID",
                 table: "DoorCodes",
                 column: "CongregationID");
@@ -426,14 +468,14 @@ namespace TerritoryWeb.Data.Migrations
                 column: "DoorCodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doors_LanguageID",
+                name: "IX_Doors_LanguageId",
                 table: "Doors",
-                column: "LanguageID");
+                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doors_TerritoryID",
+                name: "IX_Doors_TerritoryId",
                 table: "Doors",
-                column: "TerritoryID");
+                column: "TerritoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Languages_CongregationID",
@@ -441,9 +483,19 @@ namespace TerritoryWeb.Data.Migrations
                 column: "CongregationID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Territories_AssignedPublisherId",
+                table: "Territories",
+                column: "AssignedPublisherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Territories_CongregationID",
                 table: "Territories",
                 column: "CongregationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Territories_LastCheckedInById",
+                table: "Territories",
+                column: "LastCheckedInById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Territories_TerritoryTypeId",
@@ -451,14 +503,19 @@ namespace TerritoryWeb.Data.Migrations
                 column: "TerritoryTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TerritoryAccesses_ApplicationUserId",
+                table: "TerritoryAccesses",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TerritoryAccesses_TerritoryId",
                 table: "TerritoryAccesses",
                 column: "TerritoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TerritoryBounds_TerritoryID",
+                name: "IX_TerritoryBounds_TerritoryId",
                 table: "TerritoryBounds",
-                column: "TerritoryID");
+                column: "TerritoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -482,9 +539,6 @@ namespace TerritoryWeb.Data.Migrations
                 name: "Doors");
 
             migrationBuilder.DropTable(
-                name: "PublisherTypes");
-
-            migrationBuilder.DropTable(
                 name: "TerritoryAccesses");
 
             migrationBuilder.DropTable(
@@ -497,9 +551,6 @@ namespace TerritoryWeb.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "DoorCodes");
 
             migrationBuilder.DropTable(
@@ -509,10 +560,16 @@ namespace TerritoryWeb.Data.Migrations
                 name: "Territories");
 
             migrationBuilder.DropTable(
-                name: "Congregations");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "TerritoryTypes");
+
+            migrationBuilder.DropTable(
+                name: "Congregations");
+
+            migrationBuilder.DropTable(
+                name: "PublisherTypes");
         }
     }
 }

@@ -24,25 +24,25 @@
 <table class="table table-striped table-hover table-condensed">
     <tr>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().TerritoryName), "Index", new { sortOrder = ViewBag.TerritoryNameSortParam }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TerritoryName)
         </th>
         <th>
-            @Html.ActionLink(Resources.Views.Territory.Index.DoorCount, "Index", new { sortOrder = ViewBag.DoorsSortParm }, new { @style = "color: black" })
+            @Resources.Views.Territory.Index.DoorCount
         </th>
         <th class="hidden-xs">
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().City), "Index", new { sortOrder = ViewBag.CitySortParm }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().City)
         </th>
         <th class="hidden-xs">
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().Type), "Index", new { sortOrder = ViewBag.TypeSortParm }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().TerritoryTypeId)
         </th>
         <th>
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().AssignedPublisherID), "Index", new { sortOrder = ViewBag.AssignedPublisherIDSortParm }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AssignedPublisherId)
         </th>
         <th class="hidden-xs">
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().CheckedOut), "Index", new { sortOrder = ViewBag.CheckedOutSortParm }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CheckedOut)
         </th>
         <th class="hidden-xs">
-            @Html.ActionLink(Html.DisplayNameFor(model => model.FirstOrDefault().CheckedIn), "Index", new { sortOrder = ViewBag.CheckedInSortParm }, new { @style = "color: black" })
+            @Html.DisplayNameFor(model => model.FirstOrDefault().CheckedIn)
         </th>
         <th></th>
     </tr>
@@ -72,9 +72,9 @@
                 @Html.DisplayFor(modelItem => item.CheckedIn)
             </td>
             <td class="text-right">
-                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-xs btn-default terrdeletebtn"
+                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm terrdeletebtn"
                    data-terrname="@item.TerritoryName" data-id="@item.Id">
-                    <span class="glyphicon glyphicon-trash"></span>
+                    <i class="fas fa-trash-alt"></i>
                     @Resources.Common.Delete
                 </a>
             </td>

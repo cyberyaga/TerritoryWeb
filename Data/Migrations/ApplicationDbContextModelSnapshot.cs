@@ -82,6 +82,10 @@ namespace TerritoryWeb.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -133,6 +137,8 @@ namespace TerritoryWeb.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -253,9 +259,6 @@ namespace TerritoryWeb.Data.Migrations
                     b.Property<string>("Apartment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CodeID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -263,12 +266,12 @@ namespace TerritoryWeb.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("GeoLat")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
                     b.Property<decimal?>("GeoLong")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
-                    b.Property<int?>("LanguageID")
+                    b.Property<int?>("LanguageId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
@@ -289,16 +292,16 @@ namespace TerritoryWeb.Data.Migrations
                     b.Property<string>("Telephone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TerritoryID")
+                    b.Property<int>("TerritoryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoorCodeId");
 
-                    b.HasIndex("LanguageID");
+                    b.HasIndex("LanguageId");
 
-                    b.HasIndex("TerritoryID");
+                    b.HasIndex("TerritoryId");
 
                     b.ToTable("Doors");
                 });
@@ -371,8 +374,8 @@ namespace TerritoryWeb.Data.Migrations
                     b.Property<string>("AddedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AssignedPublisherID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("AssignedPublisherId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("CheckedIn")
                         .HasColumnType("datetime2");
@@ -386,8 +389,8 @@ namespace TerritoryWeb.Data.Migrations
                     b.Property<int>("CongregationID")
                         .HasColumnType("int");
 
-                    b.Property<string>("LastCheckedInBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("LastCheckedInById")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
@@ -401,15 +404,16 @@ namespace TerritoryWeb.Data.Migrations
                     b.Property<string>("TerritoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TerritoryTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
+                    b.Property<int>("TerritoryTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssignedPublisherId");
+
                     b.HasIndex("CongregationID");
+
+                    b.HasIndex("LastCheckedInById");
 
                     b.HasIndex("TerritoryTypeId");
 
@@ -422,6 +426,9 @@ namespace TerritoryWeb.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
@@ -440,6 +447,8 @@ namespace TerritoryWeb.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("TerritoryId");
 
                     b.ToTable("TerritoryAccesses");
@@ -447,23 +456,23 @@ namespace TerritoryWeb.Data.Migrations
 
             modelBuilder.Entity("TerritoryWeb.Data.TerritoryBound", b =>
                 {
-                    b.Property<int>("BoundaryID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("GeoLat")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
                     b.Property<decimal>("GeoLong")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
-                    b.Property<int>("TerritoryID")
+                    b.Property<int>("TerritoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("BoundaryID");
+                    b.HasKey("Id");
 
-                    b.HasIndex("TerritoryID");
+                    b.HasIndex("TerritoryId");
 
                     b.ToTable("TerritoryBounds");
                 });
@@ -505,6 +514,23 @@ namespace TerritoryWeb.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("URLMinimizeStores");
+                });
+
+            modelBuilder.Entity("TerritoryWeb.Data.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int?>("CongregationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PublisherTypeId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("CongregationId");
+
+                    b.HasIndex("PublisherTypeId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -566,11 +592,11 @@ namespace TerritoryWeb.Data.Migrations
 
                     b.HasOne("TerritoryWeb.Data.Language", "Language")
                         .WithMany("Doors")
-                        .HasForeignKey("LanguageID");
+                        .HasForeignKey("LanguageId");
 
                     b.HasOne("TerritoryWeb.Data.Territory", "Territory")
                         .WithMany("Doors")
-                        .HasForeignKey("TerritoryID")
+                        .HasForeignKey("TerritoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -593,19 +619,33 @@ namespace TerritoryWeb.Data.Migrations
 
             modelBuilder.Entity("TerritoryWeb.Data.Territory", b =>
                 {
+                    b.HasOne("TerritoryWeb.Data.ApplicationUser", "AssignedPublisher")
+                        .WithMany()
+                        .HasForeignKey("AssignedPublisherId");
+
                     b.HasOne("TerritoryWeb.Data.Congregation", "Congregation")
                         .WithMany("Territories")
                         .HasForeignKey("CongregationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TerritoryWeb.Data.ApplicationUser", "LastCheckedInBy")
+                        .WithMany()
+                        .HasForeignKey("LastCheckedInById");
+
                     b.HasOne("TerritoryWeb.Data.TerritoryType", "TerritoryType")
                         .WithMany("Territories")
-                        .HasForeignKey("TerritoryTypeId");
+                        .HasForeignKey("TerritoryTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TerritoryWeb.Data.TerritoryAccess", b =>
                 {
+                    b.HasOne("TerritoryWeb.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("TerritoryWeb.Data.Territory", "Territory")
                         .WithMany("TerritoryAccesses")
                         .HasForeignKey("TerritoryId")
@@ -617,9 +657,20 @@ namespace TerritoryWeb.Data.Migrations
                 {
                     b.HasOne("TerritoryWeb.Data.Territory", "Territory")
                         .WithMany("TerritoryBounds")
-                        .HasForeignKey("TerritoryID")
+                        .HasForeignKey("TerritoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TerritoryWeb.Data.ApplicationUser", b =>
+                {
+                    b.HasOne("TerritoryWeb.Data.Congregation", null)
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("CongregationId");
+
+                    b.HasOne("TerritoryWeb.Data.PublisherType", null)
+                        .WithMany("ApplicationUsers")
+                        .HasForeignKey("PublisherTypeId");
                 });
 #pragma warning restore 612, 618
         }
