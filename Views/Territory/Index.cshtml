@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<TerritoryWeb.Data.Territory>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 @{
     ViewBag.Title = "Index";
@@ -6,11 +7,11 @@
 }
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">@Html.ActionLink(Resources.Menu.Breadcrum.Home, "Index", "Home")</li>
-        <li class="breadcrumb-item active">@Resources.Menu.Breadcrum.Territories</li>
+        <li class="breadcrumb-item">@Html.ActionLink(Localizer.GetString(Resources.Menu.Breadcrum.Home), "Index", "Home")</li>
+        <li class="breadcrumb-item active">@Localizer.GetString(Resources.Menu.Breadcrum.Territories)</li>
     </ol>
 </nav>
-<h2>@Resources.Views.Territory.Index.TerritoryPageTitle</h2>
+<h2>@Localizer.GetString(Resources.Views.Territory.Index.TerritoryPageTitle)</h2>
 <p>
     <div class="row">
         <div class="col-xs-6">
@@ -27,7 +28,7 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().TerritoryName)
         </th>
         <th>
-            @Resources.Views.Territory.Index.DoorCount
+            @Localizer.GetString(Resources.Views.Territory.Index.DoorCount)
         </th>
         <th class="hidden-xs">
             @Html.DisplayNameFor(model => model.FirstOrDefault().City)
@@ -51,10 +52,10 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.TerritoryName, "Details", new { id = item.Id }, new { title = Resources.Views.Territory.Index.TerritoryLinkTitle })
+                @Html.ActionLink(item.TerritoryName, "Details", new { id = item.Id }, new { title = Localizer.GetString(Resources.Views.Territory.Index.TerritoryLinkTitle) })
             </td>
             <td>
-                @Html.ActionLink(Resources.Views.Territory.Index.DoorCount + ": " + item.Doors.Count.ToString(), "Index", "Doors", new { TerritoryID = item.Id }, new { title = Resources.Views.Territory.Index.DoorLinkTitle })
+                @Html.ActionLink(Localizer.GetString(Resources.Views.Territory.Index.DoorCount) + ": " + item.Doors.Count.ToString(), "Index", "Doors", new { TerritoryID = item.Id }, new { title = Resources.Views.Territory.Index.DoorLinkTitle })
             </td>
             <td class="hidden-xs">
                 @Html.DisplayFor(modelItem => item.City)
@@ -75,7 +76,7 @@
                 <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm terrdeletebtn"
                    data-terrname="@item.TerritoryName" data-id="@item.Id">
                     <i class="fas fa-trash-alt"></i>
-                    @Resources.Common.Delete
+                    @Localizer.GetString(Resources.Common.Delete)
                 </a>
             </td>
         </tr>
@@ -113,15 +114,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">@Resources.Views.Territory.Index.ModalDeleteTitle</h4>
+                <h4 class="modal-title" id="myModalLabel">@Localizer.GetString(Resources.Views.Territory.Index.ModalDeleteTitle)</h4>
             </div>
             <div class="modal-body">
-                @Resources.Views.Territory.Index.ModalBodyMsg1 <span id="deletemodalterrname"></span>?<br /><br />
-                @Resources.Views.Territory.Index.ModalBodyMsg2
+                @Localizer.GetString(Resources.Views.Territory.Index.ModalBodyMsg1) <span id="deletemodalterrname"></span>?<br /><br />
+                @Localizer.GetString(Resources.Views.Territory.Index.ModalBodyMsg2)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modaldeletebtn">@Resources.Common.Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Common.Close</button>
+                <button type="button" class="btn btn-danger" id="modaldeletebtn">@Localizer.GetString(Resources.Common.Delete)</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Localizer.GetString(Resources.Common.Close)</button>
             </div>
         </div>
     </div>

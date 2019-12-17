@@ -1,4 +1,6 @@
 ﻿@model TerritoryWeb.Data.Territory
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
 
 @{
     ViewBag.Title = "Create";
@@ -11,9 +13,9 @@
 </style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">@Html.ActionLink(Resources.Menu.Breadcrum.Home, "Index", "Home")</li>
-        <li class="breadcrumb-item">@Html.ActionLink(Resources.Menu.Breadcrum.Territories, "Index", "Territory")</li>
-        <li class="breadcrumb-item active">@Resources.Menu.Breadcrum.TerritoryCreate</li>
+        <li class="breadcrumb-item">@Html.ActionLink(Localizer.GetString(Resources.Menu.Breadcrum.Home), "Index", "Home")</li>
+        <li class="breadcrumb-item">@Html.ActionLink(Localizer.GetString(Resources.Menu.Breadcrum.Territories), "Index", "Territory")</li>
+        <li class="breadcrumb-item active">@Localizer.GetString(Resources.Menu.Breadcrum.TerritoryCreate)</li>
     </ol>
 </nav>
 <h2>Create</h2>
@@ -68,28 +70,28 @@
                 </div>
 
                 <div class="form-group" id="geocodegroup">
-                    <label class="control-label col-md-2">@Resources.Views.Territory.Create.GeoCodeData</label>
+                    <label class="control-label col-md-2">@Localizer.GetString(Resources.Views.Territory.Create.GeoCodeData)</label>
                     <div class="col-md-10">
                         <div class="checkbox" title="This feature has beed disabled.">
-                            <label>@Html.CheckBox("createfromgeo", false, new { @disabled = "disabled" }) @Resources.Views.Territory.Create.GeoCodeDataDesc</label>
+                            <label>@Html.CheckBox("createfromgeo", false, new { @disabled = "disabled" }) @Localizer.GetString(Resources.Views.Territory.Create.GeoCodeDataDesc)</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="@Resources.Common.Create" class="btn btn-default" />
-                        @Html.ActionLink(@Resources.Common.Cancel, "Index", "Territory", new { @class = "btn btn-default" })
+                        <input type="submit" value="Resources.Common.Create" class="btn btn-default" />
+                        @Html.ActionLink(Localizer.GetString(Resources.Common.Cancel), "Index", "Territory", new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <h4>@Resources.Views.Territory.Create.MapTitle</h4>
+            <h4>@Localizer.GetString(Resources.Views.Territory.Create.MapTitle)</h4>
             <hr />
             <div id="map"></div><br />
             <input class="form-control collapse" type="text" name="mapdata" id="mapdata" />
-            @Resources.Views.Territory.Create.MapHelpDesc
+            @Localizer.GetString(Resources.Views.Territory.Create.MapHelpDesc)
         </div>
     </div>
 }
