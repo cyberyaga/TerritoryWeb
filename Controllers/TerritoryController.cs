@@ -97,7 +97,7 @@ namespace TerritoryWeb.Controllers
                 || (territory != null && territory.CongregationID != CongID) //Not part of the congregation
                 || !(AllowCheckIn || addTerr.Contains(territory.Id) || territory.AssignedPublisherId == CurrentUserId))//Not allowed
             {
-                return NotFound();
+                //return NotFound();
             }
 
             //Print if Records in Doors
