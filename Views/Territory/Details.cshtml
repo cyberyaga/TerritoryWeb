@@ -350,17 +350,17 @@
         var jqxhr = $.getJSON(url, function (data) {
             $.each(data, function (key, val) {
                 switch (key) {
-                    case "HullCoordinates":
+                    case "hullCoordinates":
                         {
                             //Loop through collection
                             $.each(val, function (objKey, Latlongval) {
-                                var latLng = new google.maps.LatLng(Latlongval.X, Latlongval.Y);
+                                var latLng = new google.maps.LatLng(Latlongval.x, Latlongval.y);
                                 hullPoints.push(latLng);
                             });
                             polyline = new google.maps.Polygon({
                                 map: map,
                                 paths: hullPoints,
-                                fillColor: "#FF0000",
+                                fillColor: "#FFCCCC",
                                 strokeWidth: 2,
                                 fillOpacity: 0.5,
                                 strokeColor: "#0000FF",
@@ -368,11 +368,11 @@
                             });
                             break;
                         }
-                    case "DoorCoordinates":
+                    case "doorCoordinates":
                         {
                             //Loop through collection
                             $.each(val, function (objKey, Latlongval) {
-                                var latLng = new google.maps.LatLng(Latlongval.Coordinates.X, Latlongval.Coordinates.Y);
+                                var latLng = new google.maps.LatLng(Latlongval.coordinates.x, Latlongval.coordinates.y);
                                 // Creating a marker and putting it on the map
                                 var marker = new google.maps.Marker({
                                     position: latLng,

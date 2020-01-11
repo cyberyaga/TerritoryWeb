@@ -10,5 +10,6 @@ namespace Resources
         public static string Cancel => "Cancel";
         public static string Save => "Save";
         public static string Edit => "Edit";
+        public static string Culture => "en";
     }
 }

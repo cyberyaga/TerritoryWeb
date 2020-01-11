@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using TerritoryWeb.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TerritoryWeb.Controllers
 {
@@ -25,14 +26,14 @@ namespace TerritoryWeb.Controllers
         }
 
         // GET: /Territory/
-        //[AuthLog(Roles = "Admin,TerritoryEditor,Editor,Manager,ReadOnly")]
+        [Authorize(Roles = "Admin,TerritoryEditor,Editor,Manager,ReadOnly")]
         public ActionResult Index(string sortOrder)
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
 
             List<Territory> ts = new List<Territory>();
 
-            ts = db.Territories.Where(x => x.CongregationID == CongID).ToList();
+            ts = db.Territories.Include(d => d.Doors).Where(x => x.CongregationID == CongID).ToList();
 
             //Limit territories
             string[] ViewAllGroups = { "TerritoryEditor", "Manager", "Admin" };
@@ -46,18 +47,18 @@ namespace TerritoryWeb.Controllers
                     break;
                 }
             }
-/*
+
             if (LimitUser) //Limit what the user can see to assigned Territories
             {
                 string UserId = "";//User.Identity.GetUserId();
 
                 List<int> addTerr = db.TerritoryAccesses.Where(x => x.UserId == UserId).Select(s => s.TerritoryId).ToList();
                 ts = ts.Where(x => x.AssignedPublisherId == UserId || addTerr.Contains(x.Id)).ToList();
-            }*/
+            }
             return View(ts);
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public ActionResult ViewTerritories()
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -65,7 +66,7 @@ namespace TerritoryWeb.Controllers
         }
 
         // GET: /Territory/Details/5
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public ActionResult Details(int? id)
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -92,7 +93,7 @@ namespace TerritoryWeb.Controllers
 
             List<int> addTerr = db.TerritoryAccesses.Where(x => x.UserId == CurrentUserId).Select(s => s.TerritoryId).ToList();
 
-            Territory territory = db.Territories.Find(id);
+            Territory territory = db.Territories.Include(d => d.Doors).Where(x => x.Id == id).SingleOrDefault();
             if (territory == null //Not Found
                 || (territory != null && territory.CongregationID != CongID) //Not part of the congregation
                 || !(AllowCheckIn || addTerr.Contains(territory.Id) || territory.AssignedPublisherId == CurrentUserId))//Not allowed
@@ -113,7 +114,7 @@ namespace TerritoryWeb.Controllers
         }
 
         // GET: /Territory/Create
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Create()
         {
             ViewBag.TerritoryTypes = new SelectList(db.TerritoryTypes, "Id", "Description");
@@ -125,7 +126,7 @@ namespace TerritoryWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Create([Bind("Id,TerritoryName,City,Type,Notes")] Territory territory, bool createfromgeo, string mapdata = "")
         {
             if (ModelState.IsValid)
@@ -191,7 +192,7 @@ namespace TerritoryWeb.Controllers
         }
 
         // GET: /Territory/Edit/5
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -212,7 +213,7 @@ namespace TerritoryWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Edit([Bind("Id,TerritoryName,City,Type,Notes")] Territory territory, string mapdata = "")
         {
             if (ModelState.IsValid)
@@ -254,7 +255,7 @@ namespace TerritoryWeb.Controllers
         }
 
         // GET: /Territory/Delete/5
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -272,7 +273,7 @@ namespace TerritoryWeb.Controllers
         // POST: /Territory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public ActionResult DeleteConfirmed(int id)
         {
             Territory territory = db.Territories.Find(id);
@@ -281,7 +282,7 @@ namespace TerritoryWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        //[AuthLog(Roles = "Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         public JsonResult DeleteConfirmedJson(int id)
         {
             Territory territory = db.Territories.Find(id);
@@ -309,7 +310,7 @@ namespace TerritoryWeb.Controllers
             }
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor")]
         public JsonResult CheckOutTerritory(int TerritoryID, string PublisherID)
         {
             if (TerritoryID == 0 || string.IsNullOrWhiteSpace(PublisherID))
@@ -345,7 +346,7 @@ namespace TerritoryWeb.Controllers
             return Json("Ok");
         }
 
-        //[AuthLog(Roles = "Admin,Manager,Editor,TerritoryEditor")]
+        [Authorize(Roles = "Admin,Manager,Editor,TerritoryEditor")]
         public JsonResult CheckInTerritory(int TerritoryID)
         {
             if (TerritoryID == 0)
@@ -371,7 +372,7 @@ namespace TerritoryWeb.Controllers
             return Json("Ok");
         }
 
-        //[AuthLog(Roles = "Admin,Manager,Editor,TerritoryEditor")]
+        [Authorize(Roles = "Admin,Manager,Editor,TerritoryEditor")]
         public JsonResult GetListOfPublishers()
         {
             //TODO: Fix Count on query
@@ -387,7 +388,7 @@ namespace TerritoryWeb.Controllers
             return Json(list);
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public JsonResult GetTerritoryCord(int TerritoryID)
         {
 
@@ -411,7 +412,7 @@ namespace TerritoryWeb.Controllers
             return Json(tcord); //Return Model
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public JsonResult GetTerritories()
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -433,15 +434,11 @@ namespace TerritoryWeb.Controllers
 
                 tcord.Add(t);
             }
-
             
-
-           
-
             return Json(tcord); //Return Model
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public JsonResult GetAllDoors()
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -464,7 +461,7 @@ namespace TerritoryWeb.Controllers
             return Json(tcord); //Return Model
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor,ReadOnly")]
         public JsonResult GetTerritoryPermissions(int TerritoryId)
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -474,7 +471,7 @@ namespace TerritoryWeb.Controllers
             return Json(tmpaccess); //Return Model
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor")]
         public JsonResult AddTerritoryPermission(int TerritoryId, string UserId, bool AccessType)
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -516,7 +513,7 @@ namespace TerritoryWeb.Controllers
             return Json(tmpaccess); //Return Model
         }
 
-        //[AuthLog(Roles = "Admin,Manager,TerritoryEditor,Editor")]
+        [Authorize(Roles = "Admin,Manager,TerritoryEditor,Editor")]
         public JsonResult RemoveTerritoryPermission(int TerritoryId, string UserId)
         {
             int CongID = Common.IdentityExtensions.GetCongregationID(User);
@@ -535,22 +532,22 @@ namespace TerritoryWeb.Controllers
         {
             List<TerritoryAccessModel> taccess = new List<TerritoryAccessModel>();
 
-/*
-            var tmpaccess = db.TerritoryAccesses.Include(d => d.AspNetUser).Where(x => x.TerritoryId == TerritoryId && x.Territory.CongregationID == CongID);
+
+            var tmpaccess = db.TerritoryAccesses.Include(d => d.ApplicationUser).Where(x => x.TerritoryId == TerritoryId && x.Territory.CongregationID == CongID);
 
             foreach (var ta in tmpaccess)
             {
                 var t = new TerritoryAccessModel();
                 t.TerritoryId = ta.TerritoryId;
                 t.UserId = ta.UserId;
-                t.Name = ta.AspNetUser.FullName;
+                t.Name = ta.ApplicationUser.UserName;
                 t.IsReadOnly = ta.IsRead;
                 t.IsWrite = ta.IsWrite;
                 t.IsTempAccess = ta.TempAccess;
 
                 taccess.Add(t);
             }
-*/
+
             return taccess;
         }
 

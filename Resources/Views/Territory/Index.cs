@@ -1,7 +1,7 @@
 using DbLocalizationProvider;
 namespace Resources.Views.Territory
 {
-[LocalizedResource]
+    [LocalizedResource]
     public class Index
     {
         public static string TerritoryPageTitle => "Territories";
