@@ -8,7 +8,7 @@
             "hosted": true,
             "browser": "chrome",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Server/bin/Debug/net6.0/test.Server.dll",
+            "program": "${workspaceFolder}/Server/bin/Debug/net6.0/TerritoryWeb.Server.dll",
             "cwd": "${workspaceFolder}/Server",
             "url": "https://localhost:7230"
         },
