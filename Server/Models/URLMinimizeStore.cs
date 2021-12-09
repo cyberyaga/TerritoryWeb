@@ -6,9 +6,9 @@ namespace TerritoryWeb.Server.Models
     public partial class URLMinimizeStore
     {
         public int id { get; set; }
-        public string shortURL { get; set; }
-        public string longURL { get; set; }
+        public string shortURL { get; set; } = default!;
+        public string longURL { get; set; } = default!;
         public System.DateTime dateCreated { get; set; }
-        public Nullable<System.DateTime> used { get; set; }
+        public DateTime? used { get; set; }
     }
 }

@@ -5,13 +5,8 @@ namespace TerritoryWeb.Server.Models
     
     public partial class PublisherType
     {
-        public PublisherType()
-        {
-            //this.AspNetUsers = new HashSet<AspNetUser>();
-        }
-    
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = default!;
     
         //public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

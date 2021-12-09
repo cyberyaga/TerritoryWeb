@@ -5,20 +5,12 @@ namespace TerritoryWeb.Server.Models
     
     public partial class Congregation
     {
-        public Congregation()
-        {
-            this.Territories = new HashSet<Territory>();
-            //this.AspNetUsers = new HashSet<AspNetUser>();
-            this.Languages = new HashSet<Language>();
-            this.DoorCodes = new HashSet<DoorCode>();
-        }
-    
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
     
-        public virtual ICollection<Territory> Territories { get; set; }
+        public virtual ICollection<Territory> Territories { get; set; } = new HashSet<Territory>();
         //public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
-        public virtual ICollection<Language> Languages { get; set; }
-        public virtual ICollection<DoorCode> DoorCodes { get; set; }
+        public virtual ICollection<Language> Languages { get; set; } = new HashSet<Language>();
+        public virtual ICollection<DoorCode> DoorCodes { get; set; } = new HashSet<DoorCode>();
     }
 }
