@@ -5,38 +5,17 @@
             "label": "build",
             "command": "dotnet",
             "type": "process",
-            "args": [
+              "args": [
                 "build",
                 "${workspaceFolder}/Server/TerritoryWeb.Server.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/Server/TerritoryWeb.Server.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/Server/TerritoryWeb.Server.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
+                "/consoleloggerparameters:NoSummary",
+              ],
+              "group": "build",
+              "presentation": {
+                "reveal": "silent"
+              },
+              "problemMatcher": "$msCompile"
         }
     ]
 }

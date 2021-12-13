@@ -23,6 +23,16 @@ public class DataSeed
                 new TerritoryType { Id = 2, Description = "Telephone" }
             });
 
+        modelBuilder.Entity<DoorCode>().HasData(new DoorCode[] {
+            new DoorCode{ Id = 1, CongregationID = 1, Description = "Expulsado"},
+            new DoorCode{ Id = 2, CongregationID = 1, Description = "Peligroso"},
+            new DoorCode{ Id = 3, CongregationID = 1, Description = "No Visitar"},
+            new DoorCode{ Id = 4, CongregationID = 1, Description = "Privado"},
+            new DoorCode{ Id = 5, CongregationID = 1, Description = "Vacio"},
+            new DoorCode{ Id = 6, CongregationID = 1, Description = "Negocio"},
+            new DoorCode{ Id = 7, CongregationID = 1, Description = "No desean cartas"}
+        });
+
         modelBuilder.Entity<Language>().HasData(new Language[] {
                 new Language { Id = 1, Description = "English" },
                 new Language { Id = 2, Description = "Español" }
@@ -41,23 +51,24 @@ public class DataSeed
                 }
             });
 
-        modelBuilder.Entity<Door>().HasData(new Door[] {
-                new Door {
-                    Id = 2,
-                    TerritoryID = 1,
-                    Address = "1526",
-                    Street = "Catalina Ave.",
-                    Comments = "Test comment",
-                    Name = "Cesar Rodriguez",
-                    Telephone = "212-555-1212",
-                    GeoLat = 40.578639M,
-                    GeoLong = -75.481580M,
-                    AddedBy = "cyberyaga@hotmail.com",
-                    Added = DateTime.Now,
-                    ModifiedBy = "cyberyaga@hotmail.com",
-                    Modified = DateTime.Now
-                }
-            });
+        // modelBuilder.Entity<Door>().HasData(new Door[] {
+        //         new Door {
+        //             Id = 2,
+        //             TerritoryID = 1,
+        //             Address = "1526",
+        //             Street = "Catalina Ave.",
+        //             Comments = "Test comment",
+        //             Name = "Cesar Rodriguez",
+        //             Telephone = "212-555-1212",
+        //             GeoLat = 40.578639M,
+        //             GeoLong = -75.481580M,
+        //             AddedBy = "cyberyaga@hotmail.com",
+        //             Added = DateTime.Now,
+        //             ModifiedBy = "cyberyaga@hotmail.com",
+        //             Modified = DateTime.Now,
+        //             DoorCodeID = null
+        //         }
+        //     });
 
         modelBuilder.Entity<TerritoryBound>().HasData(new TerritoryBound[] {
                 new TerritoryBound { BoundaryID = 2430, TerritoryID = 1, GeoLat = 40.584240M, GeoLong = -75.503010M },
@@ -251,12 +262,12 @@ public class DataSeed
                 new TerritoryBound { BoundaryID = 2618, TerritoryID = 1, GeoLat = 40.584240M, GeoLong = -75.503010M }
             });
 
-        modelBuilder.Entity<Door>().HasData(new Door[] {
-                new Door {
-                    Id = 1,
-                    TerritoryID = 1
-                }
-            });
+        // modelBuilder.Entity<Door>().HasData(new Door[] {
+        //         new Door {
+        //             Id = 1,
+        //             TerritoryID = 1
+        //         }
+        //     });
 
         return modelBuilder;
 

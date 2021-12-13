@@ -12,7 +12,7 @@ namespace TerritoryWeb.Server.Models
         public string Street { get; set; } = "";
         public string? Apartment { get; set; }
         public int? LanguageID { get; set; }
-        public int? CodeID { get; set; }
+        public int? DoorCodeID { get; set; }
         public string? Comments { get; set; }
         public string? Name { get; set; }
         public string? Telephone { get; set; }

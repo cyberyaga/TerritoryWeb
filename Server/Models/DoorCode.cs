@@ -9,7 +9,7 @@ namespace TerritoryWeb.Server.Models
         public string Description { get; set; } = "";
         public int CongregationID { get; set; }
     
-        public virtual ICollection<Door> Doors { get; set; } = default!;
-        public virtual Congregation Congregation { get; set; } = default!;
+        public virtual ICollection<Door>? Doors { get; set; }
+        public virtual Congregation? Congregation { get; set; }
     }
 }

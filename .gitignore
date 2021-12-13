@@ -6,3 +6,5 @@ Shared/bin/**
 Shared/obj/**
 Server/appsettings.Development.json
 Server/localhost.pfx
+Server/app.db-shm
+Server/app.db-wal
