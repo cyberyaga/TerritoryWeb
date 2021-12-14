@@ -1,0 +1,54 @@
+@page "/Territory/Create"
+@using TerritoryWeb.Shared.Territory
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">Territory</li>
+        <li class="breadcrumb-item active">Create Territory</li>
+    </ol>
+</nav>
+<h2>Create</h2>
+<EditForm Model="@terr">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="row">
+        <div class="col">
+            <h4>Territory</h4>
+            <hr />
+            <div class="form-group">
+                <label>
+                    Territory Name:
+                    <InputText @bind-Value="terr.TerritoryName" class="form-control" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    City:
+                    <InputText @bind-Value="terr.City" class="form-control" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Type:
+                    <InputRadioGroup @bind-Value="terr.TerritoryTypeId">
+                        <option value="1">Door to Door</option>
+                        <option value="2">Telephone</option>
+                    </InputRadioGroup>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    Notes:
+                    <InputText @bind-Value="terr.Notes" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="col">Map</div>
+    </div>
+</EditForm>
+
+
+@code {
+    private NewTerritoryBase terr = new NewTerritoryBase();
+}

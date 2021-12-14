@@ -1,0 +1,144 @@
+@page "/Territory/Details/{TerritoryId:int}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using TerritoryWeb.Shared.Territory
+@using GoogleMapsComponents
+@using GoogleMapsComponents.Maps
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
+@inject HttpClient Http
+
+<style>
+    #map {
+        height: 400px;
+    }
+</style>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><NavLink href="/">@B.Home</NavLink></li>
+        <li class="breadcrumb-item"><NavLink href="/Territory">@B.Territory</NavLink></li>
+        <li class="breadcrumb-item active">@B.TerritoryDetails</li>
+    </ol>
+</nav>
+<h2>@L.PageTitle</h2>
+<EditForm Model="@td">
+    <div class="row">
+        <div class="col-sm">
+            <div class="mb-3">
+                <label>@L.TerritoryName</label>
+                <InputText @bind-Value="td.TerritoryName" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <label>@L.City</label>
+                <InputText @bind-Value="td.City" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <label>@L.Type</label>
+                <InputText @bind-Value="td.TerritoryTypeStr" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <label>@L.Notes</label>
+                <InputTextArea @bind-Value="td.Notes" class="form-control" readonly />
+            </div>
+            <h3>@L.DoorDetails</h3>
+            @L.DoorCount: @td.DoorCount
+            <NavLink href="@td.DoorsUrl" class="btn btn-outline-secondary"><i class="fa fa-address-book-o" aria-hidden="true"></i> @L.TerritoryDoorBtn</NavLink>
+        </div>
+        <div class="col-sm">
+            <div class="mb-3">
+                <label>@L.AssignedPublisher</label>
+                <InputText @bind-Value="td.AssignedPublisher" class="form-control" readonly />
+            </div>            
+            <div class="mb-3">
+                <label>@L.CheckedOut</label>
+                <InputDate @bind-Value="td.CheckedOut" class="form-control" readonly />
+            </div>            
+            <div class="mb-3">
+                <label>@L.CheckedIn</label>
+                <InputDate @bind-Value="td.CheckedIn" class="form-control" readonly />
+            </div>            
+            <div class="mb-3">
+                <label>@L.LastCheckedInBy</label>
+                <InputText @bind-Value="td.LastCheckedInBy" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-reply" aria-hidden="true"></i> @L.CheckOutBtn</button>
+                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-share" aria-hidden="true"></i> @L.CheckInBtn</button>
+                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-share-square-o" aria-hidden="true"></i> @L.ShareTerritoryBtn</button>
+            </div>
+        </div>
+        <div class="col-6">
+            Map
+            <GoogleMap @ref="@map1" Id="map1" Options="@mapOptions" OnAfterInit="@(async () => await OnAfterInitAsync())"></GoogleMap>
+        </div>
+    </div>
+</EditForm>
+@code {
+    [Parameter]
+    public int TerritoryId { get; set; }
+    private TerritoryDetails td = new TerritoryDetails();
+
+    //Language
+    I18nText.Territory.Details L = new I18nText.Territory.Details();
+    I18nText.Shared.Breadcrum B = new I18nText.Shared.Breadcrum();
+    I18nText.Shared.Common C = new I18nText.Shared.Common();
+
+    //Map
+    private GoogleMap map1;
+	private MapOptions mapOptions;	
+    private List<LatLngLiteral> path = new List<LatLngLiteral>();
+    private Polygon polygon;
+
+	protected override void OnInitialized()
+	{
+		mapOptions = new MapOptions()
+		{
+			Zoom = 13,
+			Center = new LatLngLiteral()
+			{
+				Lat = 40.603629,
+				Lng = -75.472518
+			},
+			MapTypeId = MapTypeId.Roadmap
+		};
+	}	
+    protected override async Task OnInitializedAsync()
+    {
+        //Load Localization
+        L = await I18nText.GetTextTableAsync<I18nText.Territory.Details>(this);
+        B = await I18nText.GetTextTableAsync<I18nText.Shared.Breadcrum>(this);
+        C = await I18nText.GetTextTableAsync<I18nText.Shared.Common>(this);
+
+        try
+        {
+            td = await Http.GetFromJsonAsync<TerritoryDetails>("Territory/GetTerritoryDetails/" + TerritoryId.ToString());
+            
+            //Convert TerritoryBounds to path
+            if (td.TerritoryBounds.Count > 0)
+            {
+                foreach (var tb in td.TerritoryBounds)
+                {
+                    path.Add(new LatLngLiteral() { Lat = tb.GeoLat, Lng = tb.GeoLong });
+                }                
+            }
+           
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private async Task OnAfterInitAsync()
+    {
+        polygon = await Polygon.CreateAsync(map1.JsRuntime, new PolygonOptions() 
+        {
+            Map = map1.InteropObject
+        });
+
+        await polygon.SetPath(path);
+        LatLngLiteral center = Common.Compute2DPolygonCentroid(path);
+        if (center.Lat != 0)
+        {
+            await map1.InteropObject.SetCenter(center);
+        };
+    }
+}
