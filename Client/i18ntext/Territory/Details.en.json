@@ -1,0 +1,17 @@
+{
+    "PageTitle": "Details",
+    "TerritoryName": "Territory Name",
+    "City": "City",
+    "Type": "Type",
+    "Notes": "Notes",
+    "AssignedPublisher": "Assigned Publisher",
+    "CheckedOut": "Checked Out",
+    "CheckedIn": "Checked In",
+    "LastCheckedInBy": "Last Checked In By",
+    "DoorDetails": "Doors Details",
+    "DoorCount": "Door Count",
+    "TerritoryDoorBtn": "View Territory Doors",
+    "CheckOutBtn": "Check Out",
+    "CheckInBtn": "Check In",
+    "ShareTerritoryBtn": "Share Territory"
+}

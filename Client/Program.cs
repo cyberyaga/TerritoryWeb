@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TerritoryWeb.Client;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -14,5 +15,6 @@ builder.Services.AddHttpClient("TerritoryWeb.ServerAPI", client => client.BaseAd
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("TerritoryWeb.ServerAPI"));
 
 builder.Services.AddApiAuthorization();
+builder.Services.AddI18nText();
 
 await builder.Build().RunAsync();

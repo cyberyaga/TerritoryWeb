@@ -1,32 +1,32 @@
 @page "/Territory"
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using TerritoryWeb.Shared.Territory
+@inject Toolbelt.Blazor.I18nText.I18nText I18nText
 @inject HttpClient Http
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><NavLink href="/">Home</NavLink></li>
-        <li class="breadcrumb-item active">Territory</li>
+        <li class="breadcrumb-item"><NavLink href="/">@B.Home</NavLink></li>
+        <li class="breadcrumb-item active">@B.Territory</li>
     </ol>
 </nav>
-<h2>PageTitle</h2>
-<NavLink href="/Territory/Create" class="btn btn-outline-secondary"><i class="fa fa-plus-square" aria-hidden="true"></i> CreateTerritory</NavLink>
+<h2>@L.PageTitle</h2>
+<NavLink href="/Territory/Create" class="btn btn-outline-secondary"><i class="fa fa-plus-square" aria-hidden="true"></i> @L.CreateTerritory</NavLink>
 @if (territories == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>@C.Loading...</em></p>
 }
 else
 {
     <table class="table table-striped table-hover table-condensed">
         <thead>
             <tr>
-                <th>THTerritoryName</th>
-                <th>THDoors</th>
-                <th>THCity</th>
-                <th>THType</th>
-                <th>THAssignedPublisher</th>
-                <th>THCheckedOut</th>
-                <th>THCheckedIn</th>
+                <th>@L.THTerritoryName</th>
+                <th>@L.THDoors</th>
+                <th>@L.THCity</th>
+                <th>@L.THType</th>
+                <th>@L.THAssignedPublisher</th>
+                <th>@L.THCheckedOut</th>
+                <th>@L.THCheckedIn</th>
             </tr>
         </thead>
         <tbody>
@@ -52,16 +52,20 @@ else
 @code {
     private TerritoryIndexView[]? territories;
     
+    //Language
+    I18nText.Territory.Index L = new I18nText.Territory.Index();
+    I18nText.Shared.Breadcrum B = new I18nText.Shared.Breadcrum();
+    I18nText.Shared.Common C = new I18nText.Shared.Common();
+
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            territories = await Http.GetFromJsonAsync<TerritoryIndexView[]>("Territory/GetTerritories");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
+        //Load Localization
+        L = await I18nText.GetTextTableAsync<I18nText.Territory.Index>(this);
+        B = await I18nText.GetTextTableAsync<I18nText.Shared.Breadcrum>(this);
+        C = await I18nText.GetTextTableAsync<I18nText.Shared.Common>(this);
+
+        territories = await Http.GetFromJsonAsync<TerritoryIndexView[]>("Territory/GetTerritories");
+
     }
 
 }

@@ -6,16 +6,16 @@ namespace TerritoryWeb.Shared.Territory
     public class TerritoryDetails
     {
         public int Id { get; set; }
-        public string TerritoryName { get; set; } = default!;
-        public string TerritoryTypeStr { get; set; } = default!;
-        public string City { get; set; } = default!;
-        public string Notes { get; set; } = default!;
-        public string AssignedPublisher { get; set; } = default!;
+        public string? TerritoryName { get; set; }
+        public string? TerritoryTypeStr { get; set; }
+        public string? City { get; set; }
+        public string? Notes { get; set; }
+        public string? AssignedPublisher { get; set; }
         public DateTime? CheckedOut { get; set; }
         public DateTime? CheckedIn { get; set; }
-        public string LastCheckedInBy { get; set; } = default!;
+        public string? LastCheckedInBy { get; set; }
         public int DoorCount { get; set; }
-        public List<TerritoryBound> TerritoryBounds { get; set; } = default!;
+        public List<TerritoryBound>? TerritoryBounds { get; set; }
 
         public class TerritoryBound
         {

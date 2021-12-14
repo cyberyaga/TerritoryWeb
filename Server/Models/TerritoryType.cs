@@ -6,8 +6,8 @@ namespace TerritoryWeb.Server.Models
     public partial class TerritoryType
     {    
         public int Id { get; set; }
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; }
     
-        public virtual ICollection<Territory> Territories { get; set; } = default!;
+        public virtual ICollection<Territory>? Territories { get; set; }
     }
 }

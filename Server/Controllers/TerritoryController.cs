@@ -31,8 +31,8 @@ namespace TerritoryWebPWA.Server.Controllers
                     TerritoryId = t.Id,
                     TerritoryName = t.TerritoryName,
                     City = t.City,
-                    TerritoryType = t.TerritoryType.Description,
-                    DoorCount = t.Doors.Count                    
+                    TerritoryType = t.TerritoryType != null ? t.TerritoryType.Description : null,
+                    DoorCount = t.Doors != null ? t.Doors.Count : 0
                 };
 
             return ter;
@@ -57,18 +57,22 @@ namespace TerritoryWebPWA.Server.Controllers
                     City = td.City,
                     TerritoryTypeStr = td.TerritoryType != null ? td.TerritoryType.Description : "",
                     Notes = td.Notes,
-                    DoorCount = td.Doors.Count,
+                    DoorCount = td.Doors != null ? td.Doors.Count : 0,
                     //AssignedPublisher = t.
                     CheckedOut = td.CheckedOut,
                     CheckedIn = td.CheckedIn,
                     LastCheckedInBy = td.LastCheckedInBy,
                     TerritoryBounds = new List<TerritoryBound>()
                 };
+                
 
                 //TerritoryBounds
-                foreach (var tb in td.TerritoryBounds)
+                if (td.TerritoryBounds != null)
                 {
-                    tds.TerritoryBounds.Add(new TerritoryBound() { GeoLat = decimal.ToDouble(tb.GeoLat), GeoLong = decimal.ToDouble(tb.GeoLong) });
+                    foreach (var tb in td.TerritoryBounds)
+                    {
+                        tds.TerritoryBounds.Add(new TerritoryBound() { GeoLat = decimal.ToDouble(tb.GeoLat), GeoLong = decimal.ToDouble(tb.GeoLong) });
+                    }
                 }
             }
 

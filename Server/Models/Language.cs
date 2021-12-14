@@ -7,10 +7,10 @@ namespace TerritoryWeb.Server.Models
     {
     
         public int Id { get; set; }
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; }
         public Nullable<int> CongregationID { get; set; }
     
-        public virtual ICollection<Door> Doors { get; set; } = default!;
-        public virtual Congregation Congregation { get; set; } = default!;
+        public virtual ICollection<Door>? Doors { get; set; }
+        public virtual Congregation? Congregation { get; set; }
     }
 }

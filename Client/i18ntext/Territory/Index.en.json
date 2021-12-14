@@ -1,0 +1,11 @@
+{
+    "PageTitle": "Territories",
+    "CreateTerritory": "Create Territory",
+    "THTerritoryName": "Territory Name",
+    "THDoors": "Doors",
+    "THCity": "City",
+    "THType": "Type",
+    "THAssignedPublisher": "Assigned Publisher",
+    "THCheckedOut": "Checked Out",
+    "THCheckedIn": "Checked In"
+}
