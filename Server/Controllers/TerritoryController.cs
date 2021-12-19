@@ -24,13 +24,13 @@ namespace TerritoryWebPWA.Server.Controllers
             db = context;
         }
 
-
         [HttpGet("GetTerritories")]
         public IEnumerable<TerritoryIndexView> GetTerritories()
         {
-            var ter = 
+            var ter =
                 from t in db.Territories
-                select new TerritoryIndexView() {
+                select new TerritoryIndexView()
+                {
                     TerritoryId = t.Id,
                     TerritoryName = t.TerritoryName,
                     City = t.City,
@@ -46,10 +46,10 @@ namespace TerritoryWebPWA.Server.Controllers
         {
             TerritoryDetails tds = new TerritoryDetails();
 
-            var td = 
+            var td =
                 (from t in db.Territories.Include(tb => tb.TerritoryBounds).Include(d => d.Doors)
-                where t.Id == TerritoryId
-                select t).SingleOrDefault();
+                 where t.Id == TerritoryId
+                 select t).SingleOrDefault();
 
             if (td != null)
             {
@@ -67,7 +67,7 @@ namespace TerritoryWebPWA.Server.Controllers
                     LastCheckedInBy = td.LastCheckedInBy,
                     TerritoryBounds = new List<TerritoryDetails.TerritoryBound>()
                 };
-                
+
 
                 //TerritoryBounds
                 if (td.TerritoryBounds != null)
@@ -81,13 +81,29 @@ namespace TerritoryWebPWA.Server.Controllers
 
             return tds;
         }
-    
+
+        [HttpGet("GetTerritoryCreate")]
+        public async Task<TerritoryCreateView> GetTerritoryCreate()
+        {
+            var ts = from t in db.TerritoryTypes
+                     select new TerritoryWeb.Shared.Territory.TerritoryType()
+                     {
+                         TerritoryTypeId = t.Id,
+                         TerritoryTypeDescription = t.Description
+                     };
+
+            TerritoryCreateView tcv = new TerritoryCreateView();
+            tcv.TerritoryTypes = await ts.ToListAsync();
+            return tcv;
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(NewTerritoryBase terr)
         {
             try
             {
-                var t = new Territory() {
+                var t = new Territory()
+                {
                     TerritoryName = terr.TerritoryName,
                     City = terr.City,
                     Notes = terr.Notes,
@@ -101,9 +117,9 @@ namespace TerritoryWebPWA.Server.Controllers
 
                 db.Territories.Add(t);
 
-                var result = await db.SaveChangesAsync();                
+                var result = await db.SaveChangesAsync();
 
-                return Ok(ModelState);                 
+                return Ok(ModelState);
             }
             catch (System.Exception ex)
             {
