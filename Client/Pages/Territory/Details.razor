@@ -67,7 +67,7 @@
         </div>
         <div class="col-6">
             Map
-            <GoogleMap @ref="@map1" Id="map1" Options="@mapOptions" OnAfterInit="@(async () => await OnAfterInitAsync())"></GoogleMap>
+            <GoogleMap @ref="@map1" Id="map1" Options="@mapOptions" OnAfterInit="@(OnAfterInitAsync)"></GoogleMap>
         </div>
     </div>
 </EditForm>
@@ -82,10 +82,10 @@
     I18nText.Shared.Common C = new I18nText.Shared.Common();
 
     //Map
-    private GoogleMap map1;
-	private MapOptions mapOptions;	
+    private GoogleMap? map1;
+	private MapOptions? mapOptions;	
     private List<LatLngLiteral> path = new List<LatLngLiteral>();
-    private Polygon polygon;
+    private Polygon? polygon;
 
 	protected override void OnInitialized()
 	{

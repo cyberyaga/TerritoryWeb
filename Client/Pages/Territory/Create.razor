@@ -1,4 +1,9 @@
 @page "/Territory/Create"
+@using Microsoft.Extensions.Logging
+@inject ILogger<Create> Logger
+@inject HttpClient Http
+@using System.Net.Http.Json
+@inject NavigationManager NavigationManager
 @using TerritoryWeb.Shared.Territory
 
 <nav aria-label="breadcrumb">
@@ -9,7 +14,7 @@
     </ol>
 </nav>
 <h2>Create</h2>
-<EditForm Model="@terr">
+<EditForm Model="@terr" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="row">
@@ -43,6 +48,11 @@
                     <InputText @bind-Value="terr.Notes" class="form-control" />
                 </label>
             </div>
+            <div class="form-group">
+                <label for="">
+                    <button type="submit" class="form-control">Submit</button>
+                </label>
+            </div>
         </div>
         <div class="col">Map</div>
     </div>
@@ -51,4 +61,17 @@
 
 @code {
     private NewTerritoryBase terr = new NewTerritoryBase();
+
+    private async Task HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+        var response = await Http.PostAsJsonAsync<NewTerritoryBase>("Territory", terr);
+
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            NavigationManager.NavigateTo("/Territory");
+        }
+
+    }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using static TerritoryWeb.Shared.Territory.TerritoryDetails;
+using TerritoryWeb.Server.Models;
 
 namespace TerritoryWebPWA.Server.Controllers
 {
@@ -15,9 +16,11 @@ namespace TerritoryWebPWA.Server.Controllers
     [Route("[controller]")]
     public class TerritoryController : ControllerBase
     {
+        private readonly ILogger<TerritoryController> logger;
         private readonly ApplicationDbContext db;
-        public TerritoryController(ApplicationDbContext context)
+        public TerritoryController(ILogger<TerritoryController> logger, ApplicationDbContext context)
         {
+            this.logger = logger;
             db = context;
         }
 
@@ -62,7 +65,7 @@ namespace TerritoryWebPWA.Server.Controllers
                     CheckedOut = td.CheckedOut,
                     CheckedIn = td.CheckedIn,
                     LastCheckedInBy = td.LastCheckedInBy,
-                    TerritoryBounds = new List<TerritoryBound>()
+                    TerritoryBounds = new List<TerritoryDetails.TerritoryBound>()
                 };
                 
 
@@ -71,12 +74,43 @@ namespace TerritoryWebPWA.Server.Controllers
                 {
                     foreach (var tb in td.TerritoryBounds)
                     {
-                        tds.TerritoryBounds.Add(new TerritoryBound() { GeoLat = decimal.ToDouble(tb.GeoLat), GeoLong = decimal.ToDouble(tb.GeoLong) });
+                        tds.TerritoryBounds.Add(new TerritoryDetails.TerritoryBound() { GeoLat = decimal.ToDouble(tb.GeoLat), GeoLong = decimal.ToDouble(tb.GeoLong) });
                     }
                 }
             }
 
             return tds;
+        }
+    
+        [HttpPost]
+        public async Task<IActionResult> Post(NewTerritoryBase terr)
+        {
+            try
+            {
+                var t = new Territory() {
+                    TerritoryName = terr.TerritoryName,
+                    City = terr.City,
+                    Notes = terr.Notes,
+                    Type = 1,
+                    CongregationID = 1,
+                    AddedBy = "cyberyaga@hotmail.com",
+                    Added = DateTime.Now,
+                    ModifiedBy = "cyberyaga@hotmail.com",
+                    Modified = DateTime.Now
+                };
+
+                db.Territories.Add(t);
+
+                var result = await db.SaveChangesAsync();                
+
+                return Ok(ModelState);                 
+            }
+            catch (System.Exception ex)
+            {
+                logger.LogError("Validation Error: {Message}", ex.Message);
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }
