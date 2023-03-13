@@ -17,6 +17,6 @@ namespace TerritoryWeb.Data.Models
         public decimal GeoLong { get; set; }
         public int TerritoryID { get; set; }
         [ForeignKey("TerritoryID")]    
-        public virtual Territory Territory { get; set; } = new Territory();
+        public virtual Territory Territory { get; set; } = default!;
     }
 }

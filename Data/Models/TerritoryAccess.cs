@@ -16,6 +16,6 @@ namespace TerritoryWeb.Data.Models
         //public virtual AspNetUser AspNetUser { get; set; }
         public int TerritoryID { get; set; }
         [ForeignKey("TerritoryID")]
-        public virtual Territory Territory { get; set; } = new Territory();
+        public virtual Territory Territory { get; set; } = default!;
     }
 }

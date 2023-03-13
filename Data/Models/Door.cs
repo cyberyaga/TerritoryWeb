@@ -21,17 +21,17 @@ namespace TerritoryWeb.Data.Models
         [Column(TypeName = "decimal(9, 6)")]
         public decimal GeoLong { get; set; }
         public string AddedBy { get; set; } = string.Empty;
-        public System.DateTime Added { get; set; }
+        public DateTime Added { get; set; }
         public string ModifiedBy { get; set; } = string.Empty;
-        public System.DateTime Modified { get; set; }
+        public DateTime Modified { get; set; }
         public int? DoorCodeID { get; set; }    
         [ForeignKey("DoorCodeID")]
-        public virtual DoorCode DoorCode { get; set; } = new DoorCode();
+        public virtual DoorCode DoorCode { get; set; } = default!;
         public int TerritoryID { get; set; }
         [ForeignKey("TerritoryID")]
-        public virtual Territory Territory { get; set; } = new Territory();
+        public virtual Territory Territory { get; set; } = default!;
         public int? LanguageID { get; set; }
         [ForeignKey("LanguageID")]
-        public virtual Language Language { get; set; } = new Language();
+        public virtual Language Language { get; set; } = default!;
     }
 }

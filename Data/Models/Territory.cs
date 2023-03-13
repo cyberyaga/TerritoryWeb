@@ -12,19 +12,19 @@ namespace TerritoryWeb.Data.Models
         public string Notes { get; set; } = string.Empty;
         public string AssignedPublisherID { get; set; } = string.Empty;
         public string AddedBy { get; set; } = string.Empty;
-        public System.DateTime Added { get; set; }
+        public DateTime Added { get; set; }
         public string ModifiedBy { get; set; } = string.Empty;
-        public System.DateTime Modified { get; set; }
-        public Nullable<System.DateTime> CheckedOut { get; set; }
-        public Nullable<System.DateTime> CheckedIn { get; set; }
+        public DateTime? Modified { get; set; }
+        public DateTime? CheckedOut { get; set; }
+        public DateTime? CheckedIn { get; set; }
         public string LastCheckedInBy { get; set; } = string.Empty;
     
         public int CongregationID { get; set; }
         [ForeignKey("CongregationID")]
-        public virtual Congregation Congregation { get; set; } = new Congregation();
+        public virtual Congregation Congregation { get; set; } = default!;
         public int TerritoryTypeID { get; set; }
         [ForeignKey("TerritoryTypeID")]
-        public virtual TerritoryType TerritoryType { get; set; } = new TerritoryType();
+        public virtual TerritoryType TerritoryType { get; set; } = default!;
         [NotMapped]
         public virtual ICollection<TerritoryBound> TerritoryBounds { get; set; } = default!;
         // public virtual AspNetUser AssignedUser { get; set; }

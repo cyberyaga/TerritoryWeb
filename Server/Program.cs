@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //DB Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<TerritoryWebDbContext>(options => 
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).EnableSensitiveDataLogging()
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
 
 builder.Services.AddControllersWithViews();

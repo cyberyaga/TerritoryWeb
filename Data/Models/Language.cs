@@ -13,6 +13,6 @@ namespace TerritoryWeb.Data.Models
         public virtual ICollection<Door> Doors { get; set; } = default!;
         public int? CongregationID { get; set; }
         [ForeignKey("CongregationID")]
-        public virtual Congregation Congregation { get; set; } = default!;
+        public virtual Congregation? Congregation { get; set; } = default!;
     }
 }

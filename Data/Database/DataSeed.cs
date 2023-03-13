@@ -33,6 +33,12 @@ public class DataSeed
             new DoorCode{ Id = 7, CongregationID = 1, Description = "No desean cartas"}
         });
 
+        // Set up the relationship between DoorCode and Congregation
+        modelBuilder.Entity<DoorCode>()
+            .HasOne(dc => dc.Congregation)
+            .WithMany(c => c.DoorCodes)
+            .HasForeignKey(dc => dc.CongregationID);
+
         modelBuilder.Entity<Language>().HasData(new Language[] {
                 new Language { Id = 1, Description = "English" },
                 new Language { Id = 2, Description = "Español" }

@@ -10,6 +10,6 @@ namespace TerritoryWeb.Data.Models
         public string Description { get; set; } = string.Empty;
     
         [NotMapped]
-        public virtual ICollection<Territory> Territories { get; set; } = new HashSet<Territory>();
+        public virtual ICollection<Territory> Territories { get; set; } = default!;
     }
 }
