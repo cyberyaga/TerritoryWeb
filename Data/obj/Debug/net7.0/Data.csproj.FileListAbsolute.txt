@@ -1,0 +1,12 @@
+/home/cyberyaga/Projects/TerritoryWeb/Data/bin/Debug/net7.0/Data.deps.json
+/home/cyberyaga/Projects/TerritoryWeb/Data/bin/Debug/net7.0/Data.dll
+/home/cyberyaga/Projects/TerritoryWeb/Data/bin/Debug/net7.0/Data.pdb
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.csproj.AssemblyReference.cache
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.GeneratedMSBuildEditorConfig.editorconfig
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.AssemblyInfoInputs.cache
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.AssemblyInfo.cs
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.csproj.CoreCompileInputs.cache
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.dll
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/refint/Data.dll
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/Data.pdb
+/home/cyberyaga/Projects/TerritoryWeb/Data/obj/Debug/net7.0/ref/Data.dll

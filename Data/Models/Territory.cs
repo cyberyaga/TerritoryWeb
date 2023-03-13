@@ -25,9 +25,11 @@ namespace TerritoryWeb.Data.Models
         public int TerritoryTypeID { get; set; }
         [ForeignKey("TerritoryTypeID")]
         public virtual TerritoryType TerritoryType { get; set; } = new TerritoryType();
+        [NotMapped]
         public virtual ICollection<TerritoryBound> TerritoryBounds { get; set; } = default!;
         // public virtual AspNetUser AssignedUser { get; set; }
         // public virtual AspNetUser LastCheckedInUser { get; set; }
+        [NotMapped]
         public virtual ICollection<Door> Doors { get; set; } = default!;
         // public virtual ICollection<TerritoryAccess> TerritoryAccesses { get; set; }
     }

@@ -5,7 +5,7 @@ using TerritoryWeb.Shared.Door;
 using System.Linq;
 using TerritoryWeb.Data.Database;
 
-namespace TerritoryWebPWA.Server.Controllers
+namespace TerritoryWeb.Server.Controllers
 {
     //[Authorize]
     [ApiController]

@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using static TerritoryWeb.Shared.Territory.TerritoryDetails;
 using TerritoryWeb.Data.Models;
 using TerritoryWeb.Data.Database;
 using TerritoryWeb.Shared.Territory;
+using Microsoft.Extensions.Logging;
 
-namespace TerritoryWebPWA.Server.Controllers
+namespace TerritoryWeb.Server.Controllers
 {
     //[Authorize]
     [ApiController]

@@ -9,6 +9,7 @@ namespace TerritoryWeb.Data.Models
         public int Id { get; set; }
         public string Description { get; set; } = string.Empty;
     
+        [NotMapped]
         public virtual ICollection<Door> Doors { get; set; } = default!;
         public int? CongregationID { get; set; }
         [ForeignKey("CongregationID")]
