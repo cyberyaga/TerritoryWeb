@@ -109,10 +109,10 @@
 
         try
         {
-            td = await Http.GetFromJsonAsync<TerritoryDetails>("Territory/GetTerritoryDetails/" + TerritoryId.ToString());
+            td = await Http.GetFromJsonAsync<TerritoryDetails>("Territory/GetTerritoryDetails/" + TerritoryId.ToString()) ?? new TerritoryDetails();
             
             //Convert TerritoryBounds to path
-            if (td.TerritoryBounds.Count > 0)
+            if (td is not null && td.TerritoryBounds.Count > 0)
             {
                 foreach (var tb in td.TerritoryBounds)
                 {
@@ -129,16 +129,20 @@
 
     private async Task OnAfterInitAsync()
     {
-        polygon = await Polygon.CreateAsync(map1.JsRuntime, new PolygonOptions() 
+        if (map1 is not null)
         {
-            Map = map1.InteropObject
-        });
+            polygon = await Polygon.CreateAsync(map1.JsRuntime, new PolygonOptions() 
+            {
+                Map = map1.InteropObject
+            });
 
-        await polygon.SetPath(path);
-        LatLngLiteral center = Common.Compute2DPolygonCentroid(path);
-        if (center.Lat != 0)
-        {
-            await map1.InteropObject.SetCenter(center);
-        };
+            await polygon.SetPath(path);
+            LatLngLiteral center = Common.Compute2DPolygonCentroid(path);
+            if (center.Lat != 0)
+            {
+                await map1.InteropObject.SetCenter(center);
+            };
+        }
+
     }
 }

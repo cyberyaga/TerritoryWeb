@@ -11,6 +11,6 @@ namespace TerritoryWeb.Shared.Territory
     public class TerritoryType
     {
         public int TerritoryTypeId { get; set; }
-        public string? TerritoryTypeDescription { get; set; }
+        public string TerritoryTypeDescription { get; set; } = string.Empty;
     }
 }

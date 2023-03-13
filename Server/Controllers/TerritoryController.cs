@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TerritoryWeb.Server.Data;
-using TerritoryWeb.Shared.Territory;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using static TerritoryWeb.Shared.Territory.TerritoryDetails;
-using TerritoryWeb.Server.Models;
+using TerritoryWeb.Data.Models;
+using TerritoryWeb.Data.Database;
+using TerritoryWeb.Shared.Territory;
 
 namespace TerritoryWebPWA.Server.Controllers
 {
@@ -17,8 +17,8 @@ namespace TerritoryWebPWA.Server.Controllers
     public class TerritoryController : ControllerBase
     {
         private readonly ILogger<TerritoryController> logger;
-        private readonly ApplicationDbContext db;
-        public TerritoryController(ILogger<TerritoryController> logger, ApplicationDbContext context)
+        private readonly TerritoryWebDbContext db;
+        public TerritoryController(ILogger<TerritoryController> logger, TerritoryWebDbContext context)
         {
             this.logger = logger;
             db = context;
@@ -34,7 +34,7 @@ namespace TerritoryWebPWA.Server.Controllers
                     TerritoryId = t.Id,
                     TerritoryName = t.TerritoryName,
                     City = t.City,
-                    TerritoryType = t.TerritoryType != null ? t.TerritoryType.Description : null,
+                    TerritoryType = t.TerritoryType.Description,
                     DoorCount = t.Doors != null ? t.Doors.Count : 0
                 };
 
@@ -107,7 +107,7 @@ namespace TerritoryWebPWA.Server.Controllers
                     TerritoryName = terr.TerritoryName,
                     City = terr.City,
                     Notes = terr.Notes,
-                    Type = 1,
+                    TerritoryTypeID = 1,
                     CongregationID = 1,
                     AddedBy = "cyberyaga@hotmail.com",
                     Added = DateTime.Now,

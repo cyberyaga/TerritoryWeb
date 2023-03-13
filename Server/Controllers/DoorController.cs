@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TerritoryWeb.Server.Data;
 using TerritoryWeb.Shared.Door;
 using System.Linq;
+using TerritoryWeb.Data.Database;
 
 namespace TerritoryWebPWA.Server.Controllers
 {
@@ -12,8 +12,8 @@ namespace TerritoryWebPWA.Server.Controllers
     [Route("[controller]")]
     public class DoorController : ControllerBase
     {
-        private readonly ApplicationDbContext db;
-        public DoorController(ApplicationDbContext context)
+        private readonly TerritoryWebDbContext db;
+        public DoorController(TerritoryWebDbContext context)
         {
             db = context;
         }

@@ -1,0 +1,23 @@
+﻿<Navbar Direction=NavbarDirection.Horizontal Background=NavbarBackground.Dark>
+
+    <a href="https://github.com/joadan/Blazor-Tabler" class="navbar-brand navbar-brand-autodark">
+        <img src="TabBlazorLogoWhite.png" alt="Tabler" class="navbar-brand-image me-2">
+        <h2 class="text-muted">My Territory Web</h2>
+    </a>
+
+    <NavbarMenu>
+        <NavbarMenuItem Href="" Text="Home">
+            <MenuItemIcon>
+                <Icon IconType="@Icons.Home" />
+            </MenuItemIcon>
+        </NavbarMenuItem>
+        <NavbarMenuItem Href="/Territory" Text="Territory">
+            <MenuItemIcon>
+                <Icon IconType="@Icons.Palette_swatch_outline" />
+            </MenuItemIcon>
+        </NavbarMenuItem>
+    </NavbarMenu>
+    <div class="col-md-3 text-end">
+        <AccessControl />
+    </div>
+</Navbar>

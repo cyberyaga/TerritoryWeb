@@ -1,0 +1,20 @@
+﻿using TabBlazor;
+
+namespace TerritoryWeb.Client
+{
+    public static class Icons
+    {
+        public static IIconType Home => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><polyline points='5 12 3 12 12 3 21 12 19 12' /><path d='M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7' /><path d='M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6' />");
+        public static IIconType Bell => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6' /><path d='M9 17v1a3 3 0 0 0 6 0v-1' />");
+        public static IIconType Search => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><circle cx='10' cy='10' r='7' /><line x1='21' y1='21' x2='15' y2='15' />");
+        public static IIconType Hearts => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M14.017 18.001l-2.017 1.999l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 0 1 8.153 5.784' /><path d='M15.99 20l4.197 -4.223a2.81 2.81 0 0 0 .006 -3.948a2.747 2.747 0 0 0 -3.91 -.007l-.28 .282l-.279 -.283a2.747 2.747 0 0 0 -3.91 -.007a2.81 2.81 0 0 0 -.007 3.948l4.182 4.238z' />");
+        public static IIconType Moneybag => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M9.5 3h5a1.5 1.5 0 0 1 1.5 1.5a3.5 3.5 0 0 1 -3.5 3.5h-1a3.5 3.5 0 0 1 -3.5 -3.5a1.5 1.5 0 0 1 1.5 -1.5z' /><path d='M4 17v-1a8 8 0 1 1 16 0v1a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z' />");
+        public static IIconType Palette_swatch_outline => new MDIcon(@"<path d='M2.5 19.6L3.8 20.2V11.2L1.4 17C1 18.1 1.5 19.2 2.5 19.6M15.2 4.8L20.2 16.8L12.9 19.8L7.9 7.9V7.8L15.2 4.8M15.3 2.8C15 2.8 14.8 2.8 14.5 2.9L7.1 6C6.4 6.3 5.9 7 5.9 7.8C5.9 8 5.9 8.3 6 8.6L11 20.5C11.3 21.3 12 21.7 12.8 21.7C13.1 21.7 13.3 21.7 13.6 21.6L21 18.5C22 18.1 22.5 16.9 22.1 15.9L17.1 4C16.8 3.2 16 2.8 15.3 2.8M10.5 9.9C9.9 9.9 9.5 9.5 9.5 8.9S9.9 7.9 10.5 7.9C11.1 7.9 11.5 8.4 11.5 8.9S11.1 9.9 10.5 9.9M5.9 19.8C5.9 20.9 6.8 21.8 7.9 21.8H9.3L5.9 13.5V19.8Z' />");
+        public static IIconType Currency_bitcoin => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M6 6h8a3 3 0 0 1 0 6a3 3 0 0 1 0 6h-8' /><line x1='8' y1='6' x2='8' y2='18' /><line x1='8' y1='12' x2='14' y2='12' /><line x1='9' y1='3' x2='9' y2='6' /><line x1='13' y1='3' x2='13' y2='6' /><line x1='9' y1='18' x2='9' y2='21' /><line x1='13' y1='18' x2='13' y2='21' />");
+        public static IIconType Currency_dollar => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2' /><path d='M12 3v3m0 12v3' />");
+        public static IIconType Settings => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><path d='M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z' /><circle cx='12' cy='12' r='3' />");
+        public static IIconType Info_circle => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><circle cx='12' cy='12' r='9' /><line x1='12' y1='8' x2='12.01' y2='8' /><polyline points='11 12 12 12 12 16 13 16' />");
+        public static IIconType Square_plus => new TablerIcon(@"<path stroke='none' d='M0 0h24v24H0z' fill='none' /><rect x='4' y='4' width='16' height='16' rx='2' /><line x1='9' y1='12' x2='15' y2='12' /><line x1='12' y1='9' x2='12' y2='15' />");
+
+    }
+}

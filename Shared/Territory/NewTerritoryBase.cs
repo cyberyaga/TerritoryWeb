@@ -7,12 +7,12 @@ namespace TerritoryWeb.Shared.Territory
     {
         [Required]
         [StringLength(50, ErrorMessage = "Territory Name is too long.")]
-        public string? TerritoryName { get; set; }
+        public string TerritoryName { get; set; } = string.Empty;
 
         [StringLength(50, ErrorMessage = "City Name is too long.")]
-        public string? City { get; set; }
+        public string City { get; set; } = string.Empty;
         public int TerritoryTypeId { get; set; }
-        public string? Notes { get; set; }
+        public string Notes { get; set; } = string.Empty;
         
     }
 }

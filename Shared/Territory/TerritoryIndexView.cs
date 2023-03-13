@@ -5,11 +5,11 @@ namespace TerritoryWeb.Shared.Territory
     public class TerritoryIndexView
     {
         public int TerritoryId { get; set; }
-        public string? TerritoryName { get; set; }
+        public string TerritoryName { get; set; } = string.Empty;
         public int DoorCount { get; set; }
-        public string? City { get; set; }
-        public string? TerritoryType { get; set; }
-        public string? AssignedPublisherName { get; set; }
+        public string City { get; set; } = string.Empty;
+        public string TerritoryType { get; set; } = string.Empty;
+        public string AssignedPublisherName { get; set; } = string.Empty;
         public DateTime LastCheckedOut { get; set; }
         public DateTime LastCheckedIn { get; set; }
 

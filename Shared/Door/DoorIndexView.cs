@@ -6,13 +6,13 @@ namespace TerritoryWeb.Shared.Door
     {
         public int Id { get; set; }                
         public int TerritoryId { get; set; }
-        public string? Address { get; set; }
-        public string? Street { get; set; }
-        public string? Apartment { get; set; }
-        public string? Comments { get; set; }
-        public string? Name { get; set; }
-        public string? Telephone { get; set; }
-        public string? Language { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string Street { get; set; } = string.Empty;
+        public string Apartment { get; set; } = string.Empty;
+        public string Comments { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Telephone { get; set; } = string.Empty;
+        public string Language { get; set; } = string.Empty;
 
         public string Url
         {
