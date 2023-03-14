@@ -57,24 +57,25 @@ public class DataSeed
                 }
             });
 
-        // modelBuilder.Entity<Door>().HasData(new Door[] {
-        //         new Door {
-        //             Id = 2,
-        //             TerritoryID = 1,
-        //             Address = "1526",
-        //             Street = "Catalina Ave.",
-        //             Comments = "Test comment",
-        //             Name = "Cesar Rodriguez",
-        //             Telephone = "212-555-1212",
-        //             GeoLat = 40.578639M,
-        //             GeoLong = -75.481580M,
-        //             AddedBy = "cyberyaga@hotmail.com",
-        //             Added = DateTime.Now,
-        //             ModifiedBy = "cyberyaga@hotmail.com",
-        //             Modified = DateTime.Now,
-        //             DoorCodeID = null
-        //         }
-        //     });
+        modelBuilder.Entity<Door>().HasData(new Door[] {
+                new Door {
+                    Id = 2,
+                    TerritoryID = 1,
+                    Address = "1526",
+                    Street = "Catalina Ave.",
+                    PostalCode = "18103",
+                    Comments = "Test comment",
+                    Name = "Cesar Rodriguez",
+                    Telephone = "212-555-1212",
+                    GeoLat = 40.578639M,
+                    GeoLong = -75.481580M,
+                    AddedBy = "cyberyaga@hotmail.com",
+                    Added = DateTime.Now,
+                    ModifiedBy = "cyberyaga@hotmail.com",
+                    Modified = DateTime.Now,
+                    DoorCodeID = null
+                }
+            });
 
         modelBuilder.Entity<TerritoryBound>().HasData(new TerritoryBound[] {
                 new TerritoryBound { BoundaryID = 2430, TerritoryID = 1, GeoLat = 40.584240M, GeoLong = -75.503010M },

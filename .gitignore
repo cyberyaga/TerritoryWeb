@@ -4,6 +4,8 @@ Server/bin/**
 Server/obj/**
 Shared/bin/**
 Shared/obj/**
+Data/bin/**
+Data/obj/**
 Server/appsettings.Development.json
 Server/localhost.pfx
 Server/app.db-shm

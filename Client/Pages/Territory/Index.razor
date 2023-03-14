@@ -9,8 +9,22 @@
         <li class="breadcrumb-item active">@B.Territory</li>
     </ol>
 </nav>
-<h2>@L.PageTitle</h2>
 <NavLink href="/Territory/Create" class="btn btn-outline-secondary"><i class="fa fa-plus-square" aria-hidden="true"></i> @L.CreateTerritory</NavLink>
+<Dimmer Active="territories == null">
+    <Table Item="TerritoryIndexView" Items="territories" Hover Selectable Responsive>
+        <HeaderTemplate>
+            <h2>@L.PageTitle</h2>
+        </HeaderTemplate>
+        <ChildContent>
+            <Column Item="TerritoryIndexView" CssClass="fs-6" Property="e=>e.TerritoryName" title="@L.THTerritoryName" />
+            <Column Item="TerritoryIndexView" CssClass="fs-6" Property="e=>e.DoorCount" title="@L.THDoors" />
+            <Column Item="TerritoryIndexView" CssClass="fs-6" Property="e=>e.City" title="@L.THCity" />
+            <Column Item="TerritoryIndexView" CssClass="fs-6" Property="e=>e.TerritoryType" title="@L.THType" />
+        </ChildContent>
+    </Table>
+</Dimmer>
+
+
 @if (territories == null)
 {
     <p><em>@C.Loading...</em></p>
