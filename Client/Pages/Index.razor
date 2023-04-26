@@ -1,13 +1,35 @@
 ﻿@page "/"
+@using TerritoryWeb.Client.Pages.Components
 @inject Toolbelt.Blazor.I18nText.I18nText I18nText
-@homeText.HelloWorld
+<div class="row">
+    <div class="col-lg-6">
+        <MapsComponent />
+    </div>
+    <div class="col-lg-6">
+        @homeText.HelloWorld<br /><br/>
+
+        @mytext<br>
+
+        <Button BackgroundColor="TablerColor.Primary" Type="ButtonType.Button" Text="This is my button" OnClick="btnclickevent" />
+    </div>
+</div>
+
+
+
 
 @code
 {
+    string mytext = "Nothing";
+
     I18nText.Home homeText = new I18nText.Home();
 
     protected override async Task OnInitializedAsync()
     {
         homeText = await I18nText.GetTextTableAsync<I18nText.Home>(this);
+    }
+
+    void btnclickevent()
+    {
+        mytext = $"Button Clicked at {DateTime.Now.ToString()}";
     }
 }
